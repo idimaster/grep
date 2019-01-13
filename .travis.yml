@@ -1,3 +1,11 @@
 language: go
+install: true
+sudo: required
+
 go:
-  - "1.10"
+  - 1.11.x
+
+env:
+  global:
+    - GOARCH=386
+    - GOOS=windows
