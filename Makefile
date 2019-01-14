@@ -5,15 +5,14 @@ test: lint
 	go test $(PKGS)
 
 BIN_DIR := $(GOPATH)/bin
-GOMETALINTER := $(BIN_DIR)/gometalinter
+GOLINT := $(BIN_DIR)/golint
 
-$(GOMETALINTER):
-	go get -u github.com/alecthomas/gometalinter
-	gometalinter --install &> /dev/null
+$(GOLINT):
+	go get -u golang.org/x/lint/golint
 
 .PHONY: lint
-lint: $(GOMETALINTER)
-	gometalinter ./... --vendor
+lint: $(GOLINT)
+	$(GOLINT) ./...
 
 BINARY := mytool
 VERSION ?= vlatest
