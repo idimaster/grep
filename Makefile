@@ -22,8 +22,12 @@ os = $(word 1, $@)
 .PHONY: $(PLATFORMS)
 $(PLATFORMS):
 	mkdir -p release
-	mkdir -p $(os)-amd64
-	GOOS=$(os) GOARCH=amd64 go build -o release/$(os)-amd64/$(BINARY)$(if $(filter windows,$(os)),.exe)
+	mkdir -p $(os)-amd64-$(VERSION)
+	GOOS=$(os) GOARCH=amd64 go build -o release/$(os)-amd64-$(VERSION)/$(BINARY)$(if $(filter windows,$(os)),.exe)
 
 .PHONY: release
 release: windows linux darwin
+
+.PHONY: package
+package: release
+	zip release/*
