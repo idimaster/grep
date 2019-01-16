@@ -5,9 +5,11 @@ import (
   "strconv"
 )
 
+// CountDOS implement simple counter for DOS line ending
 type CountDOS struct {
 }
 
+// Validate thta command has correct arguments
 func (count CountDOS) Validate(args []string) bool {
   if len(args) == 4 && args[1] == "-UPc" && args[2] == "\\r$" {
     return true
@@ -15,6 +17,7 @@ func (count CountDOS) Validate(args []string) bool {
   return false
 }
 
+// Execute command
 func (count CountDOS) Execute(args []string) (int, string, error) {
   content, err := ioutil.ReadFile(args[3])
 	if err != nil {
@@ -27,9 +30,10 @@ func (count CountDOS) Execute(args []string) (int, string, error) {
 				c++
 		}
 	}
-  return 0, strconv.Itoa(c), nil
+  return 1, strconv.Itoa(c), nil
 }
 
+// Help string
 func (count CountDOS) Help() string {
   return "grep -UPc \"\\r$\" file"
 }
